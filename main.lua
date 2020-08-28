@@ -11,8 +11,10 @@ function draw_cell (iter)
 	
 end
 function generate_table ()
-	for i=1,63 do
-		local cell = { x = math.floor(i/8)*Cell_width, y = i%8*Cell_height, status = love.math.random( 0, 1 ) }
+	for i=1,64 do
+		local k=i-1
+		local cell = { x = math.floor(k/8)*Cell_width, y = k%8*Cell_height, status = love.math.random( 0, 1 ) }
+		--print (math.floor(i/4), i%4)
 		Cell_table [i] = cell
 	end
 end
