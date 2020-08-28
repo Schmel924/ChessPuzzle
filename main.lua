@@ -8,18 +8,13 @@ function draw_cell (iter)
 	 else 
 	 	love.graphics.rectangle( 'line', iter.x, iter.y, Cell_width, Cell_height )
 	 end
-	if iter.hot == 1 then
-		love.graphics.setColor(255, 0, 0)
-		love.graphics.print('X', iter.x+9, iter.y+3, 0, 4, 3, 0, 0, 0, 0)
-		love.graphics.setColor(255, 255, 255)
-	end	
 end
 
 
 function generate_table ()
 	for i=1,64 do
 		local k=i-1
-		local cell = { x = math.floor(k/8)*Cell_width, y = k%8*Cell_height, hot = 0, status = love.math.random( 0, 1 ) }
+		local cell = { x = math.floor(k/8)*Cell_width, y = k%8*Cell_height, status = love.math.random( 0, 1 ) }
 		--print (math.floor(i/4), i%4)
 		Cell_table [i] = cell
 	end
@@ -33,16 +28,22 @@ function love.update(dt)
 	for i=1,64 do
 		local c = Cell_table [i]
 		if c.x<x and c.y<y and c.x+Cell_width >x and c.y+Cell_height>y then
-			Cell_table[i].hot = 1
-		else 
-			Cell_table[i].hot = 0
+			Hot_cell = Cell_table [i]
 		end
+	end
+	if x>Cell_table[64].x+Cell_width or y>Cell_table[64].y+Cell_height then
+		Hot_cell = nil
 	end
 end
 
 function love.draw()
 	for i,v in ipairs(Cell_table) do
 		draw_cell (v)
+	end
+	if Hot_cell ~= nil then
+		love.graphics.setColor(255, 0, 0)
+		love.graphics.print('X', Hot_cell.x+9, Hot_cell.y+3, 0, 4, 3, 0, 0, 0, 0)
+		love.graphics.setColor(255, 255, 255)
 	end
 end
 
