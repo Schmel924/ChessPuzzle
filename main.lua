@@ -14,7 +14,8 @@ end
 function read_table ()
 	local res = 0	
 	for k,v in pairs(Cell_table) do
-		res = res + k*v.status
+		local i = k-1
+		res = res + i*v.status
 	end
 	return res%Board_size	
 end
