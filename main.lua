@@ -1,7 +1,7 @@
 Cell_width, Cell_height = 50, 50
 Cell_table = {--[[ Cell={	x = 0, y = 0, status = 1 }]] }
-Board_size = 16
-row_count = 4
+Board_size = 4
+row_count = 2
 
 function draw_cell (iter)
 	if iter.status == 1 then 
@@ -38,6 +38,7 @@ function love.update(dt)
 		local c = Cell_table [i]
 		if c.x<x and c.y<y and c.x+Cell_width >x and c.y+Cell_height>y then
 			Hot_cell = Cell_table [i]
+			Hot = i
 		end
 	end
 	if x>Cell_table[Board_size].x+Cell_width or y>Cell_table[Board_size].y+Cell_height then
@@ -52,11 +53,13 @@ function love.draw()
 	if Hot_cell ~= nil then
 		love.graphics.setColor(255, 0, 0)
 		love.graphics.print('X', Hot_cell.x+9, Hot_cell.y+3, 0, 4, 3, 0, 0, 0, 0)
+		love.graphics.print(Hot-1,450,240,0 , 3, 3)
 		love.graphics.setColor(255, 255, 255)
 	end
-	local s = read_table ()+1
+	local s = read_table ()
 	--print (s)
-	love.graphics.print(s,450,200)
+	love.graphics.print(s,450,200,0 , 3, 3)
+
 end
 
 function love.mousepressed (x,y,b)
